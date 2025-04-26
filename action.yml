@@ -29,5 +29,5 @@ runs:
       env:
         PHPUNIT_PATH: "${{ inputs.phpunit-path }}"
         SEGMENTATION_STRATEGY: "${{ inputs.strategy }}"
-      run: echo "command-json=$(php tests-levels-matrix.php)" >> $GITHUB_OUTPUT
+      run: echo "command-json=$(php ${{github.action_path}}/tests-levels-matrix.php)" >> $GITHUB_OUTPUT
       shell: bash
