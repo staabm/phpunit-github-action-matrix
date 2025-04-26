@@ -46,13 +46,4 @@ if ($segments === []) {
     exit(1);
 }
 
-$commands = [];
-foreach ($segments as $segment) {
-    if ($segmentationStrategy === 'suites') {
-        $commands[] = sprintf('php %s --testsuite "%s"', $phpunitPath, $segment);
-    } elseif ($segmentationStrategy === 'groups') {
-        $commands[] = sprintf('php %s --group "%s"', $phpunitPath, $segment);
-    }
-}
-
-echo json_encode($commands);
+echo json_encode($segments);

@@ -1,8 +1,7 @@
 GitHub Action to parallelize a PHPUnit test suite over multiple GitHub Action jobs.
 
-In comparison to existing PHPUnit parallelization plugins, this action distributes the load over several jobs.
-
-Other PHPUnit parallelization plugins are used to run tests in parallel on a single host, to saturate all available CPUs. 
+In comparison to existing PHPUnit parallelization plugins, this action distributes the load over several jobs and therefore utilizes more CPUs.
+Other PHPUnit parallelization plugins are used to run tests in parallel on a single host, to saturate all available CPUs.
 
 ## Input Parameters
 
@@ -26,8 +25,8 @@ on:
   pull_request:
 
 jobs:
-  tests-matrix:
-    name: "Determine tests matrix"
+  tests-segmentation:
+    name: "Segment PHPUnit Test Suite"
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -45,17 +44,17 @@ jobs:
         run: "composer install --no-interaction --no-progress"
 
       - name: "Segment PHPUnit test-suite"
-        id: set-matrix
+        id: segmentation
         uses: staabm/phpunit-github-action-matrix@main
         with:
           phpunit-path: "vendor/bin/phpunit"
-          strategy: "groups"
+          strategy: "suites"
           
     outputs:
-      phpunit-action-matrix-json: ${{ steps.set-matrix.outputs.phpunit-action-matrix-json }}
+      phpunit-test-segments-json: ${{ steps.segmentation.outputs.segments-json }}
 
   run-test-segment:
-    needs: tests-matrix
+    needs: tests-segmentation
 
     name: "Run PHPUnit segment"
     runs-on: ubuntu-latest
@@ -64,7 +63,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        phpunit-script: "${{fromJson(needs.tests-levels-matrix.outputs.phpunit-action-matrix-json)}}"
+        phpunit-script: "${{fromJson(needs.tests-segmentation.outputs.phpunit-test-segments-json)}}"
 
     steps:
       - name: "Checkout"
@@ -80,6 +79,6 @@ jobs:
         run: "composer install --no-interaction --no-progress"
 
       - name: "Tests"
-        run: "${{ matrix.phpunit-script }}"
+        run: "vendor/bin/phpunit --testsuite ${{ matrix.phpunit-script }}"
 
 ```

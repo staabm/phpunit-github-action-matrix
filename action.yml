@@ -2,9 +2,9 @@
 # https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#inputs
 # https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#runs-for-composite-run-steps-actions
 
-name: "PHPUnit GithubAction matrix"
+name: "PHPUnit Test segmentation"
 
-description: "Run PHPUnit tests in parallel with matrix"
+description: "Returns a JSON string of PHPUnit test segments that can be used as a matrix for GithubActions."
 
 inputs:
   phpunit-path:
@@ -16,8 +16,8 @@ inputs:
     required: true
 
 outputs:
-  phpunit-action-matrix-json:
-    description: "PHPUnit action matrix"
+  segments-json:
+    description: "JSON string of segments"
     value: ${{ steps.determine-segments.outputs.command-json }}
 
 runs:
@@ -29,5 +29,5 @@ runs:
       env:
         PHPUNIT_PATH: "${{ inputs.phpunit-path }}"
         SEGMENTATION_STRATEGY: "${{ inputs.strategy }}"
-      run: echo "command-json=$(php ${{github.action_path}}/tests-levels-matrix.php)" >> $GITHUB_OUTPUT
+      run: echo "command-json=$(php ${{github.action_path}}/phpunit-segment.php)" >> $GITHUB_OUTPUT
       shell: bash
