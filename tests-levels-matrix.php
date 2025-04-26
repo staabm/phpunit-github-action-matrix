@@ -9,7 +9,8 @@ if (!isset($env['SEGMENTATION_STRATEGY'])) {
 $segmentationStrategy = $env['SEGMENTATION_STRATEGY'];
 
 if (!isset($env['PHPUNIT_PATH'])) {
-    throw new RuntimeException('PHPUNIT_PATH environment variable is not set');
+    echo '::error:: PHPUNIT_PATH environment variable is not set';
+    exit(1);
 }
 $phpunitPath = $env['PHPUNIT_PATH'];
 
@@ -18,14 +19,16 @@ if ($segmentationStrategy === 'suites') {
 } elseif ($segmentationStrategy === 'groups') {
     $output = Exec::cmd(sprintf('php %s --list-groups', $phpunitPath), $stderr, $exitCode);
 } else {
-    throw new RuntimeException('Invalid SEGMENTATION_STRATEGY value');
+    echo '::error:: Invalid SEGMENTATION_STRATEGY value.';
+    exit(1);
 }
 
 if ($exitCode !== 0) {
     echo $stderr;
     echo $output;
 
-    throw new RuntimeException('Command failed with exit code %d', $exitCode);
+    printf('::error:: Command failed with exit code %d', $exitCode);
+    exit(1);
 }
 
 $segments = [];
@@ -39,7 +42,8 @@ foreach(preg_split("/((\r?\n)|(\r\n?))/", $output) as $line){
 }
 
 if ($segments === []) {
-    throw new RuntimeException('No tests found');
+    echo '::error:: No tests found';
+    exit(1);
 }
 
 $commands = [];
