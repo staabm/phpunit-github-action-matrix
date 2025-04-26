@@ -1,0 +1,33 @@
+# https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+# https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#inputs
+# https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#runs-for-composite-run-steps-actions
+
+name: "PHPUnit GithubAction matrix"
+
+description: "Run PHPUnit tests in parallel with matrix"
+
+inputs:
+  phpunit-path:
+    description: "Path to phpunit"
+    required: false
+    default: "vendor/bin/phpunit"
+  strategy:
+    description: "Segmentation strategy, e.g. 'groups' or 'testsuites'"
+    required: true
+
+outputs:
+  phpunit-action-matrix-json:
+    description: "PHPUnit action matrix"
+    value: ${{ steps.determine-segments.outputs.command-json }}
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: "Determine segments"
+      id: determine-segments
+      env:
+        PHPUNIT_PATH: "${{ inputs.phpunit-path }}"
+        SEGMENTATION_STRATEGY: "${{ inputs.strategy }}"
+      run: echo "command-json=$(php tests-levels-matrix.php)" >> $GITHUB_OUTPUT
+      shell: bash
