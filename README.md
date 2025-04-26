@@ -1,3 +1,19 @@
+GitHub Action to parallelize a PHPUnit test suite over multiple GitHub Action jobs.
+
+In comparison to existing PHPUnit parallelization plugins, this action distributes the load over several jobs.
+
+Other PHPUnit parallelization plugins are used to run tests in parallel on a single host, to saturate all available CPUs. 
+
+## Input Parameters
+
+### `strategie`
+
+Strategy on how to segment the test suite. Supported values are `groups` and `suites`.
+
+### `phpunit-path`
+
+Path to PHPUnit executable. Default is `vendor/bin/phpunit`.
+You may append additional parameters to the command, e.g. `vendor/bin/phpunit --condfiguration=path/to/phpunit.xml`.
 
 ## Example GitHub Actions workflow
 
