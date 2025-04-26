@@ -25,7 +25,7 @@ if ($exitCode !== 0) {
     echo $stderr;
     echo $output;
 
-    throw new RuntimeException('Command failed with exit code %d', $exitCode));
+    throw new RuntimeException('Command failed with exit code %d', $exitCode);
 }
 
 $segments = [];
