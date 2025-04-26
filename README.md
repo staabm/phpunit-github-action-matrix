@@ -56,14 +56,14 @@ jobs:
   run-test-segment:
     needs: tests-segmentation
 
-    name: "Run PHPUnit segment"
+    name: "Run PHPUnit segment ${{ matrix.suite-name }}"
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
     strategy:
       fail-fast: false
       matrix:
-        phpunit-script: "${{fromJson(needs.tests-segmentation.outputs.phpunit-test-segments-json)}}"
+        suite-name: "${{fromJson(needs.tests-segmentation.outputs.phpunit-test-segments-json)}}"
 
     steps:
       - name: "Checkout"
@@ -79,6 +79,6 @@ jobs:
         run: "composer install --no-interaction --no-progress"
 
       - name: "Tests"
-        run: "vendor/bin/phpunit --testsuite ${{ matrix.phpunit-script }}"
+        run: "vendor/bin/phpunit --testsuite ${{ matrix.suite-name }}"
 
 ```
