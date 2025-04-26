@@ -18,7 +18,7 @@ inputs:
 outputs:
   segments-json:
     description: "JSON string of segments"
-    value: ${{ steps.determine-segments.outputs.command-json }}
+    value: ${{ steps.determine-segments.outputs.json }}
 
 runs:
   using: "composite"
@@ -29,5 +29,5 @@ runs:
       env:
         PHPUNIT_PATH: "${{ inputs.phpunit-path }}"
         SEGMENTATION_STRATEGY: "${{ inputs.strategy }}"
-      run: echo "command-json=$(php ${{github.action_path}}/phpunit-segment.php)" >> $GITHUB_OUTPUT
+      run: echo "json=$(php ${{github.action_path}}/phpunit-segment.php)" >> $GITHUB_OUTPUT
       shell: bash
