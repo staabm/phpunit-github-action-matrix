@@ -34,11 +34,16 @@ if ($exitCode !== 0) {
 $segments = [];
 foreach(preg_split("/((\r?\n)|(\r\n?))/", $output) as $line){
     $line = trim($line);
+
     if (strpos($line, '-') !== 0) {
         continue;
     }
 
-    $segments[] = ltrim($line, '- ');
+    $line = ltrim($line, '- ');
+    // strip "(9292 tests)" suffix in PHPUnit 12+
+    $line = preg_replace('{\s\(\d+\s+tests?\)$}', '', $line);
+
+    $segments[] = $line;
 }
 
 if ($segments === []) {
