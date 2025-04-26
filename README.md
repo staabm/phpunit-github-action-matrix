@@ -5,7 +5,7 @@ Other PHPUnit parallelization plugins are used to run tests in parallel on a sin
 
 ## Input Parameters
 
-### `strategie`
+### `strategy`
 
 Strategy on how to segment the test suite. Supported values are `groups` and `suites`.
 
