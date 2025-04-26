@@ -17,7 +17,10 @@ You may append additional parameters to the command, e.g. `vendor/bin/phpunit --
 ## Example GitHub Actions workflow
 
 The workflow shows a typical usage example within a GitHub Actions workflow.
-You may adjust this workflow as you see fit e.g. to use a different Test Runner.
+You may adjust this workflow as you see fit to e.g.
+
+- use a different Test Runner (e.g. ParaTest)
+- segment per groups instead of suites
 
 ```yaml
 # https://help.github.com/en/categories/automating-your-workflow-with-github-actions
