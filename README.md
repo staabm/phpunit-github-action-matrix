@@ -1,7 +1,15 @@
 GitHub Action to parallelize a PHPUnit test suite over multiple GitHub Action jobs.
 
+## Motivation
+
+Unit test suites grow over time and at a certain point take a considerable amount of time to execute.
+At this point there are several ways to scale your continous integration system with the goal to shorten the feedback loop again.
+
 In comparison to existing PHPUnit parallelization plugins, this action distributes the load over several jobs and therefore utilizes more CPUs.
 Other PHPUnit parallelization plugins are used to run tests in parallel on a single host, to saturate all available CPUs.
+
+Running tests in parallel GitHub Action jobs has the advantage, that there is still only a single test running at a time in each job,
+which means this approach does not necessarily need a test-suite which was designed with parallel execution in mind.
 
 After segmenting a test-suite across multiple GitHub Action jobs, you may still/additionally use in-job parallelization with well known PHPUnit plugins.
 
