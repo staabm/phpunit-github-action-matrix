@@ -23,6 +23,7 @@ You may adjust this workflow as you see fit to e.g.
 
 - use a different Test Runner (e.g. ParaTest)
 - segment per groups instead of suites
+- in case you don't need dynamic building of the test-matrix you can hard-code your segments in `run-test-segment` and drop the `tests-segmentation` job.
 
 ```yaml
 # https://help.github.com/en/categories/automating-your-workflow-with-github-actions
