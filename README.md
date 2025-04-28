@@ -3,6 +3,8 @@ GitHub Action to parallelize a PHPUnit test suite over multiple GitHub Action jo
 In comparison to existing PHPUnit parallelization plugins, this action distributes the load over several jobs and therefore utilizes more CPUs.
 Other PHPUnit parallelization plugins are used to run tests in parallel on a single host, to saturate all available CPUs.
 
+After segmenting a test-suite across multiple GitHub Action jobs, you may still/additionally use in-job parallelization with well known PHPunit plugins.
+
 ## Input Parameters
 
 ### `strategy`
@@ -16,7 +18,7 @@ You may append additional parameters to the command, e.g. `vendor/bin/phpunit --
 
 ## Example GitHub Actions workflow
 
-The workflow shows a typical usage example within a GitHub Actions workflow.
+The workflow shows a typical usage example within a GitHub Actions workflow which segments by test-suite.
 You may adjust this workflow as you see fit to e.g.
 
 - use a different Test Runner (e.g. ParaTest)
