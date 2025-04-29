@@ -99,3 +99,8 @@ jobs:
         run: "vendor/bin/phpunit --testsuite ${{ matrix.suite-name }}"
 
 ```
+
+## Alternatives
+
+After implementation was finished and we made same noise in social media regarding this repo, the following alternatives were mentioned which achieve similar things
+- https://github.com/DaveLiddament/test-splitter - Splits PHPUnit tests into batches
